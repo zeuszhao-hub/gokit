@@ -3,9 +3,9 @@ package worker
 import (
 	"context"
 	"fmt"
+	"git.neigou.com/zhaofuchun/gokit/interfaces/iserver"
 	"github.com/pkg/errors"
 	"golang.org/x/sync/errgroup"
-	"interfaces/iserver"
 	"sync"
 	"time"
 )
