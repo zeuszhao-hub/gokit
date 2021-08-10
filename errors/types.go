@@ -16,6 +16,14 @@ func (e ErrorType) New() error {
 	}
 }
 
+// Newm 创建一个自定义错误，支持指定msg
+func (e ErrorType) Newm(msg string) error {
+	return custom{
+		errType:    e,
+		wrapperErr: errors.New(msg),
+	}
+}
+
 // Wrap 包装错误
 func (e ErrorType) Wrap(err error) error {
 	return e.Wrapf(err, GetMsg(e))

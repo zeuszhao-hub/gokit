@@ -46,8 +46,11 @@ func Is(source error, target error) bool {
 	return errors.Is(source, target)
 }
 
-// IsCustom 判断err是否为自定义错误类型
+// IsCustom 判断err是否为自定义错误类型 err = nil return false
 func IsCustom(err error) bool {
+	if err == nil {
+		return false
+	}
 	_, ok := err.(custom)
 	return ok
 }
