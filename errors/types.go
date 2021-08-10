@@ -1,6 +1,7 @@
 package errors
 
 import (
+	"fmt"
 	"github.com/pkg/errors"
 )
 
@@ -21,6 +22,14 @@ func (e ErrorType) Newm(msg string) error {
 	return custom{
 		errType:    e,
 		wrapperErr: errors.New(msg),
+	}
+}
+
+// Newf 创建一个自定义错误，支持指定format
+func (e ErrorType) Newf(msg string, args ...interface{}) error {
+	return custom{
+		errType:    e,
+		wrapperErr: errors.New(fmt.Sprintf(msg, args...)),
 	}
 }
 
