@@ -20,7 +20,7 @@ func GetMsg(err ErrorType) string {
 
 // GetCode 获取错误码
 func GetCode(err error) ErrorType {
-	if customeErr, ok := err.(custome); ok {
+	if customeErr, ok := err.(custom); ok {
 		return customeErr.errType
 	}
 	return ErrorCustomType

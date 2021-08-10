@@ -10,7 +10,7 @@ const ErrorCustomType ErrorType = 999999
 
 // New 创建对应类型错误
 func (e ErrorType) New() error {
-	return custome{
+	return custom{
 		errType:    e,
 		wrapperErr: errors.New(GetMsg(e)),
 	}
@@ -24,7 +24,7 @@ func (e ErrorType) Wrap(err error) error {
 // Wrapf 格式化包装错误
 func (e ErrorType) Wrapf(err error, msg string, args ...interface{}) error {
 	wrapErr := errors.Wrapf(err, msg, args...)
-	return custome{
+	return custom{
 		errType:    e,
 		wrapperErr: wrapErr,
 	}
