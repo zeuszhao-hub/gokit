@@ -3,8 +3,8 @@ package http
 import (
 	"context"
 	"fmt"
-	"git.neigou.com/zhaofuchun/gokit/interfaces/iserver"
 	"github.com/pkg/errors"
+	"github.com/zeuszhao-hub/gokit/interfaces/iserver"
 	"net/http"
 	"time"
 )

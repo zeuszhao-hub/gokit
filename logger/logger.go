@@ -1,7 +1,7 @@
 package logger
 
 import (
-	"git.neigou.com/zhaofuchun/gokit/interfaces/ilogger"
+	"github.com/zeuszhao-hub/gokit/interfaces/ilogger"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

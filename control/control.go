@@ -1,7 +1,7 @@
 package control
 
 import (
-	"git.neigou.com/zhaofuchun/gokit/interfaces/iserver"
+	"github.com/zeuszhao-hub/gokit/interfaces/iserver"
 )
 
 type Control struct {
