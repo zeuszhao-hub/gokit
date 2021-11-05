@@ -36,7 +36,7 @@ func (s *signature) Expire(expire string) *signature {
 }
 
 //Sign 签名
-func (s signature) Sign(data interface{}) (string, error) {
+func (s *signature) Sign(data interface{}) (string, error) {
 	str, err := json.Marshal(data)
 	if err != nil {
 		return "", err
@@ -52,6 +52,29 @@ func (s signature) Sign(data interface{}) (string, error) {
 	h.Write([]byte(stringSign))
 	signStr := hex.EncodeToString(h.Sum(nil))
 	return signStr, nil
+}
+
+//SignData 对数据签名并返回签名数据
+func (s *signature) SignData(data interface{}) (map[string]interface{}, error) {
+	sign, err := s.Sign(data)
+	if err != nil {
+		return nil, err
+	}
+
+	m := make(map[string]interface{})
+	m["appid"] = s.appid
+	m["data"] = data
+	m["sign"] = sign
+
+	if s.salt != "" {
+		m["salt"] = s.salt
+	}
+
+	if s.expire != "" {
+		m["expire"] = s.expire
+	}
+
+	return m, nil
 }
 
 //Verify 验证签名

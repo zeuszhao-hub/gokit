@@ -1,6 +1,7 @@
 package signature
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -19,13 +20,16 @@ type testData struct {
 func TestSignature(t *testing.T) {
 	data := testData{
 		a: "abc",
-		b: "bcd",
+		b: "你好",
 		c: 19,
 		d: testData1{
 			e: "efg",
 			f: 20,
 		},
 	}
+
+	signData, _ := New("aaa", "bbb").Salt("vvv").SignData(data)
+	fmt.Println(signData)
 
 	sign, err := New("aaa", "bbb").Salt("vvv").Sign(data)
 	if err != nil {
