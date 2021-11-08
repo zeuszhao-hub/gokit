@@ -37,7 +37,9 @@ func (s *signature) Expire(expire string) *signature {
 
 //Sign 签名
 func (s *signature) Sign(data interface{}) (string, error) {
+	fmt.Println(data)
 	str, err := json.Marshal(data)
+	fmt.Println(str)
 	if err != nil {
 		return "", err
 	}

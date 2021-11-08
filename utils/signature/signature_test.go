@@ -1,35 +1,31 @@
 package signature
 
 import (
-	"fmt"
 	"testing"
 )
 
 type testData1 struct {
-	e string
-	f int
+	E string `json:"e"`
+	F int    `json:"f"`
 }
 
 type testData struct {
-	a string
-	b string
-	c int
-	d testData1
+	A string    `json:"a"`
+	B string    `json:"b"`
+	C int       `json:"c"`
+	D testData1 `json:"d"`
 }
 
 func TestSignature(t *testing.T) {
 	data := testData{
-		a: "abc",
-		b: "你好",
-		c: 19,
-		d: testData1{
-			e: "efg",
-			f: 20,
+		A: "abc",
+		B: "你好",
+		C: 19,
+		D: testData1{
+			E: "efg",
+			F: 20,
 		},
 	}
-
-	signData, _ := New("aaa", "bbb").Salt("vvv").SignData(data)
-	fmt.Println(signData)
 
 	sign, err := New("aaa", "bbb").Salt("vvv").Sign(data)
 	if err != nil {
