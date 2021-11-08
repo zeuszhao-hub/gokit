@@ -7,7 +7,7 @@ import (
 
 // Go 包装go关键字，限制必须指定传递ctx
 // 执行fun必须支持ctx取消
-func Go(ctx context.Context, ret chan<- interface{}, fun func(ctx context.Context, ret chan<- interface{})) {
+func Go(ctx context.Context, fun func(ctx context.Context, ret chan<- interface{}), ret chan<- interface{}) {
 	go func() {
 		defer func() {
 			if err := recover(); err != nil {
