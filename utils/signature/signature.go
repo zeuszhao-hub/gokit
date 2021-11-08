@@ -44,9 +44,9 @@ func (s *signature) Sign(data interface{}) (string, error) {
 		return "", err
 	}
 	query := url.Values{}
+	query.Add("appid", s.appid)
 	query.Add("data", string(str))
 	query.Add("salt", s.salt)
-	query.Add("appid", s.appid)
 	query.Add("expire", s.expire)
 	queryStr := query.Encode()
 	stringSign := queryStr + fmt.Sprintf("&secret=%s", s.secret)
@@ -67,14 +67,8 @@ func (s *signature) SignData(data interface{}) (map[string]interface{}, error) {
 	m["appid"] = s.appid
 	m["data"] = data
 	m["sign"] = sign
-
-	if s.salt != "" {
-		m["salt"] = s.salt
-	}
-
-	if s.expire != "" {
-		m["expire"] = s.expire
-	}
+	m["salt"] = s.salt
+	m["expire"] = s.expire
 
 	return m, nil
 }
