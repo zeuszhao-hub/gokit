@@ -10,10 +10,10 @@ import (
 )
 
 type signature struct {
-	appid  string
-	secret string
-	salt   string
-	expire string
+	appid     string
+	secret    string
+	salt      string
+	timestamp string
 }
 
 //New 创建sign签名对象
@@ -30,9 +30,9 @@ func (s *signature) Salt(salt string) *signature {
 	return s
 }
 
-//Expire 增加时间
-func (s *signature) Expire(expire string) *signature {
-	s.expire = expire
+//Timestamp 增加时间
+func (s *signature) Timestamp(timestamp string) *signature {
+	s.timestamp = timestamp
 	return s
 }
 
@@ -42,7 +42,7 @@ func (s *signature) Sign(data interface{}) (string, error) {
 	query.Add("appid", s.appid)
 	query.Add("data", strval(data))
 	query.Add("salt", s.salt)
-	query.Add("expire", s.expire)
+	query.Add("timestamp", s.timestamp)
 	queryStr := query.Encode()
 	stringSign := queryStr + fmt.Sprintf("&secret=%s", s.secret)
 	h := md5.New()
@@ -63,7 +63,7 @@ func (s *signature) SignData(data interface{}) (map[string]interface{}, error) {
 	m["data"] = data
 	m["sign"] = sign
 	m["salt"] = s.salt
-	m["expire"] = s.expire
+	m["timestamp"] = s.timestamp
 
 	return m, nil
 }
