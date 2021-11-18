@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"strconv"
 )
 
 type signature struct {
@@ -37,15 +38,9 @@ func (s *signature) Expire(expire string) *signature {
 
 //Sign 签名
 func (s *signature) Sign(data interface{}) (string, error) {
-	fmt.Println(data)
-	str, err := json.Marshal(data)
-	fmt.Println(str)
-	if err != nil {
-		return "", err
-	}
 	query := url.Values{}
 	query.Add("appid", s.appid)
-	query.Add("data", string(str))
+	query.Add("data", strval(data))
 	query.Add("salt", s.salt)
 	query.Add("expire", s.expire)
 	queryStr := query.Encode()
@@ -81,4 +76,58 @@ func (s *signature) Verify(data interface{}, sign string) (bool, error) {
 	}
 
 	return makeSign == sign, nil
+}
+
+func strval(v interface{}) string {
+	var value string
+	if v == nil {
+		return value
+	}
+
+	switch v.(type) {
+	case float64:
+		ft := v.(float64)
+		value = strconv.FormatFloat(ft, 'f', -1, 64)
+	case float32:
+		ft := v.(float32)
+		value = strconv.FormatFloat(float64(ft), 'f', -1, 64)
+	case int:
+		it := v.(int)
+		value = strconv.Itoa(it)
+	case uint:
+		it := v.(uint)
+		value = strconv.Itoa(int(it))
+	case int8:
+		it := v.(int8)
+		value = strconv.Itoa(int(it))
+	case uint8:
+		it := v.(uint8)
+		value = strconv.Itoa(int(it))
+	case int16:
+		it := v.(int16)
+		value = strconv.Itoa(int(it))
+	case uint16:
+		it := v.(uint16)
+		value = strconv.Itoa(int(it))
+	case int32:
+		it := v.(int32)
+		value = strconv.Itoa(int(it))
+	case uint32:
+		it := v.(uint32)
+		value = strconv.Itoa(int(it))
+	case int64:
+		it := v.(int64)
+		value = strconv.FormatInt(it, 10)
+	case uint64:
+		it := v.(uint64)
+		value = strconv.FormatUint(it, 10)
+	case string:
+		value = v.(string)
+	case []byte:
+		value = string(v.([]byte))
+	default:
+		newValue, _ := json.Marshal(v)
+		value = string(newValue)
+	}
+	return value
 }

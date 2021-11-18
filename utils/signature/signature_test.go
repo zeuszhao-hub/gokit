@@ -1,6 +1,7 @@
 package signature
 
 import (
+	"encoding/json"
 	"testing"
 )
 
@@ -31,14 +32,19 @@ func TestSignature(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	check, err := New("aaa", "bbb").Salt("vvv").Verify(data, sign)
+
+	jsonMarshal, _ := json.Marshal(data)
+	str := jsonMarshal
+
+	check, err := New("aaa", "bbb").Salt("vvv").Verify(str, sign)
+	check1, err := New("aaa", "bbb").Salt("vvv").Verify(data, sign)
 	if err != nil {
 		t.Error(err)
 	}
 
-	if check {
+	if check && check1 {
 		t.Log("ture")
 	} else {
-		t.Log("false")
+		t.Error("false")
 	}
 }
